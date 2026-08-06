@@ -2,7 +2,7 @@
 
 Interactive Genome Exploration & Analysis Platform
 
-Learning genomics by building.
+Learning genomics step by step.
 
 This project is being built step by step.
 This project is built milestone by milestone.

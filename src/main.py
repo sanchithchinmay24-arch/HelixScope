@@ -1,4 +1,4 @@
-dna = "ATGCGGTAAC"
+dna = "AAAAAAAAAA"
 
 length = len(dna)
 

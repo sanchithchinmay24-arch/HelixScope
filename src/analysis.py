@@ -50,3 +50,122 @@ def reverse_complement(dna):
         result += complement[base]
 
     return result[::-1]
+def transcribe_dna(dna):
+    dna = dna.upper()
+
+    valid_bases = {"A", "T", "G", "C"}
+
+    if not set(dna).issubset(valid_bases):
+        print("Invalid DNA sequence")
+        return None
+
+    rna = dna.replace("T", "U")
+
+    return {
+        "DNA": dna,
+        "RNA": rna,
+        "length": len(rna)
+    }
+def rna_to_codons(rna):
+    rna = rna.upper()
+
+    valid_bases = {"A", "U", "G", "C"}
+
+    if not set(rna).issubset(valid_bases):
+        print("Invalid RNA sequence")
+        return None
+
+    codons = []
+
+    for i in range(0, len(rna) - 2, 3):
+        codon = rna[i:i + 3]
+        codons.append(codon)
+
+    return codons
+
+CODON_TABLE = {
+    "UUU": "F", "UUC": "F",
+    "UUA": "L", "UUG": "L",
+
+    "UCU": "S", "UCC": "S", "UCA": "S", "UCG": "S",
+    "UAU": "Y", "UAC": "Y",
+    "UAA": "*", "UAG": "*",
+
+    "UGU": "C", "UGC": "C",
+    "UGA": "*", "UGG": "W",
+
+    "CUU": "L", "CUC": "L", "CUA": "L", "CUG": "L",
+
+    "CCU": "P", "CCC": "P", "CCA": "P", "CCG": "P",
+
+    "CAU": "H", "CAC": "H",
+    "CAA": "Q", "CAG": "Q",
+
+    "CGU": "R", "CGC": "R", "CGA": "R", "CGG": "R",
+
+    "AUU": "I", "AUC": "I", "AUA": "I",
+    "AUG": "M",
+
+    "ACU": "T", "ACC": "T", "ACA": "T", "ACG": "T",
+
+    "AAU": "N", "AAC": "N",
+    "AAA": "K", "AAG": "K",
+
+    "AGU": "S", "AGC": "S",
+    "AGA": "R", "AGG": "R",
+
+    "GUU": "V", "GUC": "V", "GUA": "V", "GUG": "V",
+
+    "GCU": "A", "GCC": "A", "GCA": "A", "GCG": "A",
+
+    "GAU": "D", "GAC": "D",
+    "GAA": "E", "GAG": "E",
+
+    "GGU": "G", "GGC": "G", "GGA": "G", "GGG": "G"
+}
+def translate_codons(codons):
+    protein = ""
+
+    for codon in codons:
+        amino_acid = CODON_TABLE.get(codon)
+
+        if amino_acid is None:
+            print("Invalid codon:", codon)
+            return None
+
+        protein += amino_acid
+
+        if amino_acid == "*":
+            break
+
+    return protein
+
+def find_orfs(dna):
+    dna = dna.upper()
+
+    valid_bases = {"A", "T", "G", "C"}
+
+    if not set(dna).issubset(valid_bases):
+        print("Invalid DNA sequence")
+        return None
+
+    start_codon = "ATG"
+    stop_codons = {"TAA", "TAG", "TGA"}
+
+    orfs = []
+
+    for i in range(len(dna) - 2):
+
+        if dna[i:i + 3] == start_codon:
+
+            for j in range(i + 3, len(dna) - 2, 3):
+
+                codon = dna[j:j + 3]
+
+                if codon in stop_codons:
+
+                    orf = dna[i:j + 3]
+                    orfs.append(orf)
+                    break
+
+    return orfs

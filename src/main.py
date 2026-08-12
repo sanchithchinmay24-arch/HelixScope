@@ -1,4 +1,4 @@
-from analysis import (analyze_dna,reverse_complement,transcribe_dna,rna_to_codons,translate_codons,find_orfs)
+from analysis import (analyze_dna,reverse_complement, transcribe_dna, rna_to_codons, translate_codons, find_orfs, annotate_orf)
 if __name__ == "__main__":
 
     result = analyze_dna("ATGCGGTAAC")
@@ -35,3 +35,11 @@ print("ORFs 4:", find_orfs("ATGAAATAG"))
 reverse_test = "CTATTTCAT"
 
 print("Reverse strand test:", find_orfs(reverse_test))
+
+dna = "CCCATGAAAGGGTAAACCC"
+
+orfs = find_orfs(dna)
+
+for orf in orfs:
+    annotation = annotate_orf(orf)
+    print("Annotated ORF:", annotation)

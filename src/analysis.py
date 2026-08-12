@@ -188,3 +188,24 @@ def find_orfs(dna):
                             break
 
     return orfs
+
+def annotate_orf(orf):
+    sequence = orf["sequence"]
+
+    length = len(sequence)
+
+    rna = sequence.replace("T", "U")
+
+    codons = rna_to_codons(rna)
+
+    protein = translate_codons(codons)
+
+    return {
+        "sequence": sequence,
+        "start": orf["start"],
+        "end": orf["end"],
+        "length": length,
+        "frame": orf["frame"],
+        "strand": orf["strand"],
+        "protein": protein
+    }

@@ -1,4 +1,4 @@
-from analysis import (analyze_dna,reverse_complement,transcribe_dna,rna_to_codons,translate_codons,find_orfs,annotate_orf,simulate_mutation)
+from analysis import (analyze_dna,reverse_complement,transcribe_dna,rna_to_codons,translate_codons,find_orfs,annotate_orf,simulate_mutation,analyze_mutation,find_restriction_sites)
 if __name__ == "__main__":
 
     result = analyze_dna("ATGCGGTAAC")
@@ -49,3 +49,31 @@ mutation = simulate_mutation("ATGCGGTAAC", 6, "G")
 print("Mutation:", mutation)
 print("Invalid mutation:", simulate_mutation("ATGCGGTAAC", 6, "X"))
 print("Invalid position:", simulate_mutation("ATGCGGTAAC", 50, "G"))
+
+mutation_result = analyze_mutation(
+    "ATGAAAGGGTAA",
+    6,
+    "A"
+)
+
+print("Mutation analysis:", mutation_result)
+
+restriction_result = find_restriction_sites(
+    "AAGAATTCCG"
+)
+
+print("Restriction sites:", restriction_result)
+print(
+    "Restriction sites 2:",
+    find_restriction_sites(
+        "AAGAATTCCGGATCCAAGCTT"
+    )
+)
+print(
+    "Restriction sites 3:",
+    find_restriction_sites("AAAAAAAAAAAA")
+)
+print(
+    "Restriction sites 4:",
+    find_restriction_sites("ATGCXTA")
+)

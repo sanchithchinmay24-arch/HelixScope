@@ -239,3 +239,76 @@ def simulate_mutation(dna, position, new_base):
         "original_base": original_base,
         "new_base": new_base
     }
+
+def analyze_mutation(dna, position, new_base):
+    mutation = simulate_mutation(dna, position, new_base)
+
+    if mutation is None:
+        return None
+
+    original_dna = mutation["original"]
+    mutated_dna = mutation["mutated"]
+
+    original_rna = transcribe_dna(original_dna)["RNA"]
+    mutated_rna = transcribe_dna(mutated_dna)["RNA"]
+
+    original_codons = rna_to_codons(original_rna)
+    mutated_codons = rna_to_codons(mutated_rna)
+
+    original_protein = translate_codons(original_codons)
+    mutated_protein = translate_codons(mutated_codons)
+
+    if original_protein == mutated_protein:
+        impact = "silent"
+    elif "*" in mutated_protein and "*" not in original_protein:
+        impact = "nonsense"
+    else:
+        impact = "missense"
+
+    return {
+        "position": position,
+        "original_base": mutation["original_base"],
+        "new_base": mutation["new_base"],
+        "original_dna": original_dna,
+        "mutated_dna": mutated_dna,
+        "original_protein": original_protein,
+        "mutated_protein": mutated_protein,
+        "impact": impact
+    }
+
+RESTRICTION_ENZYMES = {
+    "EcoRI": "GAATTC",
+    "BamHI": "GGATCC",
+    "HindIII": "AAGCTT"
+}
+
+def find_restriction_sites(dna):
+    dna = dna.upper()
+
+    valid_bases = {"A", "T", "G", "C"}
+
+    if not set(dna).issubset(valid_bases):
+        print("Invalid DNA sequence")
+        return None
+
+    sites = []
+
+    for enzyme, recognition_site in RESTRICTION_ENZYMES.items():
+
+        start = 0
+
+        while True:
+            position = dna.find(recognition_site, start)
+
+            if position == -1:
+                break
+
+            sites.append({
+                "enzyme": enzyme,
+                "site": recognition_site,
+                "position": position
+            })
+
+            start = position + 1
+
+    return sites

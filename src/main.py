@@ -1,4 +1,4 @@
-from analysis import (analyze_dna,reverse_complement, transcribe_dna, rna_to_codons, translate_codons, find_orfs, annotate_orf)
+from analysis import (analyze_dna,reverse_complement,transcribe_dna,rna_to_codons,translate_codons,find_orfs,annotate_orf,simulate_mutation)
 if __name__ == "__main__":
 
     result = analyze_dna("ATGCGGTAAC")
@@ -43,3 +43,9 @@ orfs = find_orfs(dna)
 for orf in orfs:
     annotation = annotate_orf(orf)
     print("Annotated ORF:", annotation)
+
+mutation = simulate_mutation("ATGCGGTAAC", 6, "G")
+
+print("Mutation:", mutation)
+print("Invalid mutation:", simulate_mutation("ATGCGGTAAC", 6, "X"))
+print("Invalid position:", simulate_mutation("ATGCGGTAAC", 50, "G"))

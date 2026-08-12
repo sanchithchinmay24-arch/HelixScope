@@ -209,3 +209,33 @@ def annotate_orf(orf):
         "strand": orf["strand"],
         "protein": protein
     }
+
+def simulate_mutation(dna, position, new_base):
+    dna = dna.upper()
+    new_base = new_base.upper()
+
+    valid_bases = {"A", "T", "G", "C"}
+
+    if not set(dna).issubset(valid_bases):
+        print("Invalid DNA sequence")
+        return None
+
+    if new_base not in valid_bases:
+        print("Invalid DNA base")
+        return None
+
+    if position < 0 or position >= len(dna):
+        print("Invalid position")
+        return None
+
+    original_base = dna[position]
+
+    mutated_dna = dna[:position] + new_base + dna[position + 1:]
+
+    return {
+        "original": dna,
+        "mutated": mutated_dna,
+        "position": position,
+        "original_base": original_base,
+        "new_base": new_base
+    }

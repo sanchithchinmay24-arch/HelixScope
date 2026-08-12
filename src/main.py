@@ -3,7 +3,6 @@ from analysis import analyze_dna, reverse_complement
 
 if __name__ == "__main__":
     result = analyze_dna("ATGCGGTAAC")
-    result = analyze_dna("ATGCGGTAAC")
 print("GC percentage from result:", result["GC_content"])
 
 print("Reverse complement:", reverse_complement("ATGCGGTAAC"))

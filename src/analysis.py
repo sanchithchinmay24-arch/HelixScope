@@ -154,29 +154,37 @@ def find_orfs(dna):
 
     orfs = []
 
-    for frame in range(3):
+    strands = {
+        "forward": dna,
+        "reverse": reverse_complement(dna)
+    }
 
-        for i in range(frame, len(dna) - 2, 3):
+    for strand_name, sequence in strands.items():
 
-            codon = dna[i:i + 3]
+        for frame in range(3):
 
-            if codon == start_codon:
+            for i in range(frame, len(sequence) - 2, 3):
 
-                for j in range(i + 3, len(dna) - 2, 3):
+                codon = sequence[i:i + 3]
 
-                    next_codon = dna[j:j + 3]
+                if codon == start_codon:
 
-                    if next_codon in stop_codons:
+                    for j in range(i + 3, len(sequence) - 2, 3):
 
-                        orf = dna[i:j + 3]
+                        next_codon = sequence[j:j + 3]
 
-                        orfs.append({
-                            "sequence": orf,
-                            "start": i,
-                            "end": j + 3,
-                            "frame": frame
-                        })
+                        if next_codon in stop_codons:
 
-                        break
+                            orf = sequence[i:j + 3]
+
+                            orfs.append({
+                                "sequence": orf,
+                                "start": i,
+                                "end": j + 3,
+                                "frame": frame,
+                                "strand": strand_name
+                            })
+
+                            break
 
     return orfs

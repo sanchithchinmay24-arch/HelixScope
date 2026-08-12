@@ -32,3 +32,6 @@ print("ORFs:", orfs)
 print("ORFs 2:", find_orfs("AAAAAAAAAAAA"))
 print("ORFs 3:", find_orfs("ATGCXTA"))
 print("ORFs 4:", find_orfs("ATGAAATAG"))
+reverse_test = "CTATTTCAT"
+
+print("Reverse strand test:", find_orfs(reverse_test))

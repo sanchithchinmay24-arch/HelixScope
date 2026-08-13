@@ -1,4 +1,4 @@
-from analysis import (analyze_dna,reverse_complement,transcribe_dna,rna_to_codons,translate_codons,find_orfs,annotate_orf,simulate_mutation,analyze_mutation,find_restriction_sites)
+from analysis import (analyze_dna,reverse_complement,transcribe_dna,rna_to_codons,translate_codons,find_orfs,annotate_orf,simulate_mutation,analyze_mutation,find_restriction_sites,compare_sequences)
 if __name__ == "__main__":
 
     result = analyze_dna("ATGCGGTAAC")
@@ -77,3 +77,10 @@ print(
     "Restriction sites 4:",
     find_restriction_sites("ATGCXTA")
 )
+
+comparison = compare_sequences(
+    "ATGCGT",
+    "ATGCTT"
+)
+
+print("Sequence comparison:", comparison)

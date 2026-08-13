@@ -312,3 +312,41 @@ def find_restriction_sites(dna):
             start = position + 1
 
     return sites
+
+def compare_sequences(sequence_a, sequence_b):
+    sequence_a = sequence_a.upper()
+    sequence_b = sequence_b.upper()
+
+    valid_bases = {"A", "T", "G", "C"}
+
+    if not set(sequence_a).issubset(valid_bases):
+        print("Invalid sequence A")
+        return None
+
+    if not set(sequence_b).issubset(valid_bases):
+        print("Invalid sequence B")
+        return None
+
+    if len(sequence_a) != len(sequence_b):
+        print("Sequences must have the same length")
+        return None
+
+    matches = 0
+    mismatches = 0
+
+    for base_a, base_b in zip(sequence_a, sequence_b):
+
+        if base_a == base_b:
+            matches += 1
+        else:
+            mismatches += 1
+
+    similarity = (matches / len(sequence_a)) * 100
+
+    return {
+        "sequence_a": sequence_a,
+        "sequence_b": sequence_b,
+        "matches": matches,
+        "mismatches": mismatches,
+        "similarity": similarity
+    }
